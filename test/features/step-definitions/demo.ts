@@ -30,13 +30,14 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  * Web Interactions
  */
 Given(/^A web page is opened$/, async function () {
-  await browser.url("/inputs");
+  // await browser.url("/inputs");
+  await browser.url("/dropdown");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
 
 When(/^Perform web interactions$/, async function () {
-  //   #region 1. Input Box
+  //   #region 1. InputBox
   /**
    * Actions:
    * 1) Type into input box
@@ -67,6 +68,25 @@ When(/^Perform web interactions$/, async function () {
    * 2) Select by attribute, text, index
    * 3) Get a list of options
    */
+
+  let ele = await $('//select/option[@selected="selected"]');
+  let val = await ele.getText();
+  chai.expect(val).to.equal("Please select an option");
+
+  let dropDownEle = $("#dropdown");
+  // await dropDownEle.selectByVisibleText("Option 2");
+  // await dropDownEle.selectByAttribute("value", 2);
+  dropDownEle.selectByIndex(2);
+
+  let eleArr = await $$(`select > option`);
+  let arr = [];
+  for (let i = 0; i < eleArr.length; i++) {
+    let ele = eleArr[i];
+    let val = await ele.getText();
+    arr.push(val)
+    console.log(val);
+  }
+  console.log(`>> Options Array: ${arr}`);
 
   await browser.debug();
   //#endregion
