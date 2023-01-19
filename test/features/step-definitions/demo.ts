@@ -31,7 +31,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  */
 Given(/^A web page is opened$/, async function () {
   // await browser.url("/inputs");
-  await browser.url("/checkboxes");
+  await browser.url("/windows");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -97,26 +97,58 @@ When(/^Perform web interactions$/, async function () {
    * 3) Assert if option is selected
    * 4) Select all options
    */
-  let ele1 = await $(`//form[@id="checkboxes"]/input[1]`);
-  await ele1.click();
-  await browser.pause(1000);
+  // let ele1 = await $(`//form[@id="checkboxes"]/input[1]`);
+  // await ele1.click();
+  // await browser.pause(1000);
 
-  await ele1.click();
+  // await ele1.click();
 
-  let ele2 = await $(`//form[@id="checkboxes"]/input[2]`);
-  let isChecked = await ele2.isSelected();
-  chai.expect(isChecked).to.be.true;
-  
-  await ele2.click();
-  await browser.pause(1000);
-  let eleArr = await $$(`//form[@id="checkboxes"]/input`);
-  for (let i = 0; i < eleArr.length; i++) {
-    let ele = eleArr[i]
-    if(!await ele.isSelected()){
-      await ele.click();
-    }
+  // let ele2 = await $(`//form[@id="checkboxes"]/input[2]`);
+  // let isChecked = await ele2.isSelected();
+  // chai.expect(isChecked).to.be.true;
+
+  // await ele2.click();
+  // await browser.pause(1000);
+  // let eleArr = await $$(`//form[@id="checkboxes"]/input`);
+  // for (let i = 0; i < eleArr.length; i++) {
+  //   let ele = eleArr[i]
+  //   if(!await ele.isSelected()){
+  //     await ele.click();
+  //   }
+  // }
+  //#endregion
+
+  //#region 4. Windows Handling
+  /**
+   * Steps:
+   * 1) Lauch the browser
+   * 2) Open another windows
+   * 3) Switch to the window based on title
+   * 4) Switch back to the main window
+   *
+   * Methods used:
+   * 1) getTitle()
+   * 2) getWindowHandle()
+   * 3) getWindowHandles()
+   * 4) switchToWindow()
+   */
+  await $(`=Click Here`).click();
+  await $(`=Elemental Selenium`).click();
+  let currentWinTitle = await browser.getTitle();
+  console.log(`>> currentWinTitle: ${currentWinTitle}`);
+
+  let winHandles = await browser.getWindowHandles();
+  for (let i = 0; i < winHandles.length; i++) {
+    console.log(`>> Win handle: ${winHandles[i]}`);
   }
 
+  await browser.switchToWindow(winHandles[2]);
+  currentWinTitle = await browser.getTitle();
+  console.log(`>> currentWinTitle: ${currentWinTitle}`);
+
+  await browser.switchToWindow(winHandles[0]);
+  currentWinTitle = await browser.getTitle();
+  console.log(`>> currentWinTitle: ${currentWinTitle}`);
   //#endregion
   await browser.debug();
 });
