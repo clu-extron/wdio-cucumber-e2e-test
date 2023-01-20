@@ -31,7 +31,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  */
 Given(/^A web page is opened$/, async function () {
   // await browser.url("/inputs");
-  await browser.url("/upload");
+  await browser.url("/frames");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -180,8 +180,23 @@ When(/^Perform web interactions$/, async function () {
   //#endregion
   
   //#region 6. File upload
-  await $(`#file-upload`).addValue(`${process.cwd()}/data/fileupload/dummy.txt`);
-  await $('#file-submit').click();
+  // await $(`#file-upload`).addValue(`${process.cwd()}/data/fileupload/dummy.txt`);
+  // await $('#file-submit').click();
+
+  //#endregion
+  
+  //#region 7. Frames
+  /**
+   * Methods used:
+   * 1) switchToFrame
+   * 2) switchToParentFrame
+   */
+  await $(`=iFrame`).click();
+  let ele = await $(`#mce_0_ifr`);
+  await browser.switchToFrame(ele);
+  // Interaction with frames...
+  await $(`#tinymce`).setValue(`Typing into a frame...`);
+  await browser.switchToParentFrame();
 
   //#endregion
   await browser.debug();
