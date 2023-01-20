@@ -31,7 +31,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  */
 Given(/^A web page is opened$/, async function () {
   // await browser.url("/inputs");
-  await browser.url("/windows");
+  await browser.url("/javascript_alerts");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -132,23 +132,51 @@ When(/^Perform web interactions$/, async function () {
    * 3) getWindowHandles()
    * 4) switchToWindow()
    */
-  await $(`=Click Here`).click();
-  await $(`=Elemental Selenium`).click();
-  let currentWinTitle = await browser.getTitle();
-  console.log(`>> currentWinTitle: ${currentWinTitle}`);
+  // await $(`=Click Here`).click();
+  // await $(`=Elemental Selenium`).click();
+  // let currentWinTitle = await browser.getTitle();
+  // console.log(`>> currentWinTitle: ${currentWinTitle}`);
 
-  let winHandles = await browser.getWindowHandles();
-  for (let i = 0; i < winHandles.length; i++) {
-    console.log(`>> Win handle: ${winHandles[i]}`);
+  // let winHandles = await browser.getWindowHandles();
+  // for (let i = 0; i < winHandles.length; i++) {
+  //   console.log(`>> Win handle: ${winHandles[i]}`);
+  // }
+
+  // await browser.switchToWindow(winHandles[2]);
+  // currentWinTitle = await browser.getTitle();
+  // console.log(`>> currentWinTitle: ${currentWinTitle}`);
+
+  // await browser.switchToWindow(winHandles[0]);
+  // currentWinTitle = await browser.getTitle();
+  // console.log(`>> currentWinTitle: ${currentWinTitle}`);
+  //#endregion
+
+  //#region 5. Alerts/Pop up windows
+  /**
+   * Methods used:
+   * 1) isAlertOpen()
+   * 2) acceptAlert()
+   * 3) dismissAlert()
+   * 4) getAlertText()
+   * 5) sendAlertText()
+   */
+  // await $(`button=Click for JS Alert`).click();
+  await $(`button=Click for JS Prompt`).click();
+  if (await browser.isAlertOpen()) {
+    // await browser.pause(2000);
+    // await browser.acceptAlert();
+
+    // await browser.pause(2000);
+    // await browser.dismissAlert();
+
+    let alertText = await browser.getAlertText();
+    console.log(`>> alertText: ${alertText}`);
+    await browser.pause(1000);
+    await browser.sendAlertText(`Hello JS Prompt...`);
+    await browser.pause(2000);
+    await browser.acceptAlert();
   }
 
-  await browser.switchToWindow(winHandles[2]);
-  currentWinTitle = await browser.getTitle();
-  console.log(`>> currentWinTitle: ${currentWinTitle}`);
-
-  await browser.switchToWindow(winHandles[0]);
-  currentWinTitle = await browser.getTitle();
-  console.log(`>> currentWinTitle: ${currentWinTitle}`);
   //#endregion
   await browser.debug();
 });
