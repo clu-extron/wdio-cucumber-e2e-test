@@ -191,13 +191,26 @@ When(/^Perform web interactions$/, async function () {
    * 1) switchToFrame
    * 2) switchToParentFrame
    */
+  // await $(`=iFrame`).click();
+  // let ele = await $(`#mce_0_ifr`);
+  // await browser.switchToFrame(ele);
+  // // Interaction with frames...
+  // await $(`#tinymce`).setValue(`Typing into a frame...`);
+  // await browser.switchToParentFrame();
+
+  //#endregion
+  
+  //#region 8. Keys
   await $(`=iFrame`).click();
   let ele = await $(`#mce_0_ifr`);
   await browser.switchToFrame(ele);
   // Interaction with frames...
+  await $(`#tinymce`).click();
+  await browser.keys(["Meta", "A"]);
+  await browser.pause(3000);
+  await browser.keys["Delete"];
   await $(`#tinymce`).setValue(`Typing into a frame...`);
   await browser.switchToParentFrame();
-
   //#endregion
   await browser.debug();
 });
