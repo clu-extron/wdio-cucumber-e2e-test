@@ -31,7 +31,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  */
 Given(/^A web page is opened$/, async function () {
   // await browser.url("/inputs");
-  await browser.url("/javascript_alerts");
+  await browser.url("/upload");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -161,21 +161,27 @@ When(/^Perform web interactions$/, async function () {
    * 5) sendAlertText()
    */
   // await $(`button=Click for JS Alert`).click();
-  await $(`button=Click for JS Prompt`).click();
-  if (await browser.isAlertOpen()) {
+  // await $(`button=Click for JS Prompt`).click();
+  // if (await browser.isAlertOpen()) {
     // await browser.pause(2000);
     // await browser.acceptAlert();
 
     // await browser.pause(2000);
     // await browser.dismissAlert();
 
-    let alertText = await browser.getAlertText();
-    console.log(`>> alertText: ${alertText}`);
-    await browser.pause(1000);
-    await browser.sendAlertText(`Hello JS Prompt...`);
-    await browser.pause(2000);
-    await browser.acceptAlert();
-  }
+  //   let alertText = await browser.getAlertText();
+  //   console.log(`>> alertText: ${alertText}`);
+  //   await browser.pause(1000);
+  //   await browser.sendAlertText(`Hello JS Prompt...`);
+  //   await browser.pause(2000);
+  //   await browser.acceptAlert();
+  // }
+
+  //#endregion
+  
+  //#region 6. File upload
+  await $(`#file-upload`).addValue(`${process.cwd()}/data/fileupload/dummy.txt`);
+  await $('#file-submit').click();
 
   //#endregion
   await browser.debug();
