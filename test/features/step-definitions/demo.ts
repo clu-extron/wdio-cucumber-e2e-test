@@ -31,7 +31,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  */
 Given(/^A web page is opened$/, async function () {
   // await browser.url("/inputs");
-  await browser.url("/frames");
+  await browser.url("/Best-Sellers/zgbs");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -201,16 +201,20 @@ When(/^Perform web interactions$/, async function () {
   //#endregion
   
   //#region 8. Keys
-  await $(`=iFrame`).click();
-  let ele = await $(`#mce_0_ifr`);
-  await browser.switchToFrame(ele);
-  // Interaction with frames...
-  await $(`#tinymce`).click();
-  await browser.keys(["Meta", "A"]);
-  await browser.pause(3000);
-  await browser.keys["Delete"];
-  await $(`#tinymce`).setValue(`Typing into a frame...`);
-  await browser.switchToParentFrame();
+  // await $(`=iFrame`).click();
+  // let ele = await $(`#mce_0_ifr`);
+  // await browser.switchToFrame(ele);
+  // // Interaction with frames...
+  // await $(`#tinymce`).click();
+  // await browser.keys(["Meta", "A"]);
+  // await browser.pause(3000);
+  // await browser.keys["Delete"];
+  // await $(`#tinymce`).setValue(`Typing into a frame...`);
+  // await browser.switchToParentFrame();
+  //#endregion
+  
+  //#region 9. Basic Scrolling
+  await $('span=Best Sellers in Beauty & Personal Care').scrollIntoView();
   //#endregion
   await browser.debug();
 });
