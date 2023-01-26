@@ -1,5 +1,8 @@
 import type { Options } from '@wdio/types'
 
+let headless = process.env.HEADLESS
+console.log(`>> The headless flag: ${headless}`);
+
 export const config: Options.Testrunner = {
     //
     // ====================
@@ -65,10 +68,25 @@ export const config: Options.Testrunner = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
+        /**
+         * Additional chrome options:
+         * --headless
+         * --disable-dev-shm-usage
+         * --no-sandbox
+         * --window-size=1920,1080
+         * --disable-gpu
+         * --proxy-server
+         * binary=<location>
+         * --auth-server-whitelist="_"
+         */
         maxInstances: 5,
         //
         browserName: 'chrome',
-        acceptInsecureCerts: true
+        "goog:chromeOptions": {
+            args: headless.toUpperCase() === "Y" ? ["--disable-web-security", "--headless", "--disable-dev-shm-usage", "--no-sandbox", "--window-size=1920,1080"] : []
+        },
+        acceptInsecureCerts: true,
+        timeouts: { implicit: 10000, pageLoad: 20000, script: 30000 },
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
