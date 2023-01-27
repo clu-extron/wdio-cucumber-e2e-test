@@ -1,4 +1,5 @@
 import { Given } from "@wdio/cucumber-framework";
+import logger from "../../helper/logger.js"
 
 Given(
   /^As (a|an) (.*) user I login to inventory web app$/,
@@ -8,8 +9,8 @@ Given(
     // DEBUG: console.log(`>> The type of dt: ${typeof dt.constructor}`);
     // DEBUG: console.log(`>> The value of dt: ${JSON.stringify(dt)}`);
     // DEBUG: console.log(`>> The userType: ${userType}`);
-    // DEBUG: Get the testid
-    console.log(`>> Given step Test ID: ${this.testid}`);
+    // DEBUG: console.log(`>> Given step Test ID: ${this.testid}`);
+    logger.info(`${this.testid}: Started to login sauce demo app...`);
     /** 1. Launch browser */
     // @ts-ignore
     await browser.url(browser.options.sauceDemoURL);
