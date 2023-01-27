@@ -5,10 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "demo": "set HEADLESS=N && npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@demo'",
-    "smoke": "set HEADLESS=Y && npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@smoke'",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "wdio run ./wdio.conf.ts"
+    "test:debug": "set DEBUG=Y && set HEADLESS=N && wdio run config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
+    "test:demo": "set DEBUG=N && set HEADLESS=N && wdio run config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
+    "test:smoke": "set DEBUG=N && set HEADLESS=Y && wdio run config/wdio.test.conf.ts --cucumberOpts.tagExpression='@smoke'",
+    "uat:demo": "set DEBUG=N && set HEADLESS=N && wdio run config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@demo'",
+    "uat:smoke": "set DEBUG=N && set HEADLESS=Y && wdio run config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@smoke'",
+    "wdio": "wdio run wdio.conf.ts"
   },
   "keywords": [
     "wdio",
@@ -27,6 +29,7 @@
     "@wdio/spec-reporter": "^8.1.2",
     "chai": "^4.3.7",
     "chromedriver": "^109.0.0",
+    "dotenv": "^16.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4",
     "wdio-chromedriver-service": "^8.0.1"
