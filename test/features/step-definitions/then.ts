@@ -1,8 +1,9 @@
 import { Then } from "@wdio/cucumber-framework";
 import chai from "chai";
+import logger from "../../helper/logger.js"
 
 Then(/^Inventory page should (.*)\s?list (.*)$/, async function (negativeCheck, numOfProducts) {
-  console.log(`>> Starting ${this.testid}...`);
+  // DEBUG: console.log(`>> Starting ${this.testid}...`);
   // DEBUG: console.log(`>> The appid: ${this.appid}`);
   if (!numOfProducts)
     throw Error(`Invalid product count provided: ${numOfProducts}`);
@@ -18,6 +19,7 @@ Then(/^Inventory page should (.*)\s?list (.*)$/, async function (negativeCheck, 
  * 3. Assert if any value is <= 0
  */
 Then(/^Validate all products have valid price$/, async function () {
+  logger.info(`${this.testid}: Checking the price...`);
   /**1. Get price list */
   let eleArr = await $$(`.inventory_item_price`);
   let priceStrArr = [];
