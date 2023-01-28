@@ -1,6 +1,9 @@
 // @ts-nocheck
 import type { Options } from "@wdio/types";
 import dotenv from "dotenv";
+import allure from "@wdio/allure-reporter";
+import fs from "fs";
+
 dotenv.config();
 let headless = process.env.HEADLESS;
 let debug = process.env.DEBUG;
@@ -174,7 +177,15 @@ export const config: Options.Testrunner = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ["spec", ["allure", { outputDir: "allure-results" }]],
+  reporters: ["spec", 
+    ["allure", 
+      { 
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        useCucumberStepReporter: true 
+      }
+    ]
+  ],
 
   //
   // If you are using Cucumber you need to specify the location of your step definitions.
@@ -216,8 +227,11 @@ export const config: Options.Testrunner = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: function (config, capabilities) {
+    if (process.env.RUNNER === "LOCAL" && fs.existsSync("./allure-results")) {
+      fs.rmdirSync("./allure-results", { recursive: true })
+    }
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialise specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -341,8 +355,10 @@ export const config: Options.Testrunner = {
    * @param {String}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  // afterFeature: function (uri, feature) {
-  // },
+  afterFeature: function (uri, feature) {
+    // Add more env details
+    allure.addEnvironment("Environment: ", browser.options.environment)
+  },
 
   /**
    * Runs after a WebdriverIO command gets executed
