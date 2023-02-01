@@ -2,14 +2,15 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "module": "ESNext",
+        "target": "es2022",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "suppressExcessPropertyErrors": true,
         "types": [
             "node",
             "@wdio/globals/types",
             "expect-webdriverio",
             "@wdio/cucumber-framework"
-        ],
-        "target": "es2022",
-        "esModuleInterop": true,
-        "resolveJsonModule": true
+        ]
     }
 }

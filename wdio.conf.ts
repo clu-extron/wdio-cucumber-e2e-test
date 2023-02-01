@@ -38,6 +38,7 @@ export const config: Options.Testrunner = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
+  currentDt: new Date(),
   specs: [
     `${process.cwd()}/test/features/**/*.feature`,
     // ToDo: define location for spec files here
