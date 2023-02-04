@@ -273,8 +273,8 @@ export const config: Options.Testrunner = {
   before: function (capabilities, specs) {
     browser.options["environment"] = config.environment;
     browser.options["sauceDemoURL"] = config.sauceDemoURL;
-    // browser.options["reqresBaseURL"] = config.reqresBaseURL
-    // browser.options["nopeCommerceBaseURL"] = config.nopeCommerceBaseURL
+    browser.options["reqresBaseURL"] = config.reqresBaseURL
+    browser.options["nopCommerceBaseURL"] = config.nopCommerceBaseURL
   },
   /**
    * Runs before a WebdriverIO command gets executed.
